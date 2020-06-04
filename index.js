@@ -11,10 +11,11 @@ let server = new Server();
 SocketIO.on('connection', (socket) => {
     let connection = server.onConnected(socket);
     connection.socket.emit('register',{"id":connection.player.id});
-    new ConsoleMsg('Player '+connection.player.id+" joined to server.");
+
 
     connection.createEvents();
     socket.on('disconnect', () => {
         new ConsoleMsg('Player disconnected.');
+
     });
 });
