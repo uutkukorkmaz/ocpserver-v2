@@ -1,5 +1,6 @@
 let Connection = require('./Connection');
 let Msg = require('./Msg');
+let Cfg = require('./Config');
 let Player = require('./Entyties/Player');
 
 module.exports = class Server {
@@ -21,9 +22,14 @@ module.exports = class Server {
     }
 
     onDisconnected(connection = Connection){
-        new ConsoleMsg(Config.ColorRed+'Player '+connection.player.id+" left from server.","error");
+        new Msg(Config.ColorRed+'Player '+connection.player.id+" left from server.","error");
         delete this.players[connection.player.id];
 
+    }
+
+    init(){
+        new Msg('Preparing the server', 'info');
+        new Msg('version '+Cfg.Config.ServerVersion, 'info');
     }
 
 }
