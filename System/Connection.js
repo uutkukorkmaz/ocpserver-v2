@@ -14,8 +14,8 @@ module.exports = class Connection {
         let server = connection.server;
         let player = connection.player;
 
-        socket.on('disconnect',()=>{
-
+        socket.on('disconnect', () => {
+            server.onDisconnected(connection);
         });
     }
 }
