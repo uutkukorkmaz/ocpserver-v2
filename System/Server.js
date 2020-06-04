@@ -16,7 +16,7 @@ module.exports = class Server {
         connection.server = server;
 
         this.players[connection.player.id] = connection;
-        new Msg('Player '+connection.player.id+" joined to server.");
+        new Msg('Player '+connection.player.id+" joined to server.","info");
         return connection;
     }
 

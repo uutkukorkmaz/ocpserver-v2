@@ -15,7 +15,7 @@ SocketIO.on('connection', (socket) => {
 
     connection.createEvents();
     socket.on('disconnect', () => {
-        new ConsoleMsg('Player disconnected.');
+        server.onDisconnected(connection);
 
     });
 });
