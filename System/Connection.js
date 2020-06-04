@@ -7,4 +7,15 @@ module.exports = class Connection {
     constructor (){
 
     }
+
+    createEvents(){
+        let connection = this;
+        let socket = connection.socket;
+        let server = connection.server;
+        let player = connection.player;
+
+        socket.on('disconnect',()=>{
+
+        });
+    }
 }

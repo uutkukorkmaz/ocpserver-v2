@@ -1,4 +1,4 @@
-let connection = require('./Connection');
+let Connection = require('./Connection');
 let Player = require('./Entyties/Player');
 module.exports = class Server {
 
@@ -9,7 +9,14 @@ module.exports = class Server {
 
     onConnected(socket){
         let server = this;
-        let Connection = new connection();
+        let connection = new Connection();
+        connection.socket = socket;
+        connection.player = new Player();
+        connection.server = server;
+
+        this.players[connection.player.id] = connection;
+
+        return connection;
     }
 
 }
