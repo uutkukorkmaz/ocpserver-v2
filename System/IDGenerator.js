@@ -19,8 +19,7 @@ module.exports = class IdGenerator {
         var retries = 0;
         var id;
 
-        // Try to generate a unique ID,
-        // i.e. one that isn't in the previous.
+
         while(!id && retries < UNIQUE_RETRIES) {
             id = this.prepare();
             if(previous.indexOf(id) !== -1) {
