@@ -22,10 +22,15 @@ module.exports = class Server {
         return this.connection;
     }
 
+    onSpawn(allPlayers){
+
+        //TODO: sunucuya bağlı ve ID'si bana eşit olmayan tüm soketleri broadcast yap...
+    }
+
     onDisconnected(connection = Connection){
         new Msg(Cfg.Config.ColorRed+'Player '+this.connection.player.data.id+" left from server."+Cfg.Config.ColorWhite,"error");
+        connection.socket.emit('playerLeft',{id:this.connection.player.data.id});
         delete this.players[this.connection.player.data.id];
-
     }
 
     init(){
