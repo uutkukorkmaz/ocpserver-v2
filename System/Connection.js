@@ -16,6 +16,7 @@ module.exports = class Connection {
 
         socket.emit('spawn',player);
         socket.broadcast.emit('spawn',player);
+
         socket.on('disconnect', () => {
             server.onDisconnected(connection);
         });
