@@ -7,23 +7,24 @@ module.exports = class Server {
 
     constructor() {
         this.players = [];
+        this.connection = [];
     }
 
     onConnected(socket){
         let server = this;
-        let connection = new Connection();
-        connection.socket = socket;
-        connection.player = new Player();
-        connection.server = server;
-
-        this.players[connection.player.id] = connection;
-        new Msg('Player '+connection.player.id+" joined to server.","info");
-        return connection;
+        this.connection = new Connection();
+        this.connection.socket = socket;
+        this.connection.player = new Player();
+        this.connection.server = server;
+        console.log(this.connection.player);/*
+        this.players[this.connection.player.data.id] = this.connection;
+        new Msg('Player '+this.connection.player.id+" joined to server.","info");*/
+        return this.connection;
     }
 
     onDisconnected(connection = Connection){
-        new Msg(Cfg.Config.ColorRed+'Player '+connection.player.id+" left from server.","error");
-        delete this.players[connection.player.id];
+        new Msg(Cfg.Config.ColorRed+'Player '+this.connection.player.id+" left from server.","error");
+        delete this.players[this.connection.player.id];
 
     }
 

@@ -2,6 +2,7 @@ const IdGen = require('../IDGenerator');
 
 
 module.exports = class Player {
+    data;
     constructor() {
         this.data = {
             id: IdGen.generate(),
