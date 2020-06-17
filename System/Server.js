@@ -16,15 +16,15 @@ module.exports = class Server {
         this.connection.socket = socket;
         this.connection.player = new Player();
         this.connection.server = server;
-        console.log(this.connection.player);/*
+
         this.players[this.connection.player.data.id] = this.connection;
-        new Msg('Player '+this.connection.player.id+" joined to server.","info");*/
+        new Msg('Player '+this.connection.player.data.id+" joined to server.","info");
         return this.connection;
     }
 
     onDisconnected(connection = Connection){
-        new Msg(Cfg.Config.ColorRed+'Player '+this.connection.player.id+" left from server.","error");
-        delete this.players[this.connection.player.id];
+        new Msg(Cfg.Config.ColorRed+'Player '+this.connection.player.data.id+" left from server.","error");
+        delete this.players[this.connection.player.data.id];
 
     }
 
