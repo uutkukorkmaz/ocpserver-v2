@@ -22,7 +22,7 @@ module.exports = class Server {
     }
 
     onDisconnected(connection = Connection){
-        new Msg(Config.ColorRed+'Player '+connection.player.id+" left from server.","error");
+        new Msg(Cfg.Config.ColorRed+'Player '+connection.player.id+" left from server.","error");
         delete this.players[connection.player.id];
 
     }
