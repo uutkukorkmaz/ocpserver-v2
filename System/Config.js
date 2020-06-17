@@ -1,7 +1,7 @@
 exports.Config = {
 
     ServerName : 'OCP Server',
-    ServerVersion: '1.0.11',
+    ServerVersion: 'dev-1.0.011',
     Port: process.env.PORT || 52300,
 
 

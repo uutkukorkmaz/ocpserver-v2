@@ -34,8 +34,8 @@ module.exports = class Server {
     }
 
     init(){
-        new Msg('Preparing the server', 'info');
-        new Msg('version '+Cfg.Config.ServerVersion, 'info');
+        new Msg('Preparing the server', 'processing');
+        new Msg('version '+Cfg.Config.ServerVersion, 'processing');
     }
 
 }
