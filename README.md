@@ -1,6 +1,5 @@
-# ocpserver-v2
 # Server Documentation [dev-1.0.011]
-This documentation tries to explain that how the hell is oldscoolplanet's server-side works and helps that how to develop it.
+This documentation tries to explain that how the hell is [gamename]'s server-side works and helps that how to develop it.
 ## Contents
 
 1. index.js
@@ -42,10 +41,10 @@ REQUIRES:
 
 METHODS:
 
-- `constructor()`
-Method takes no parameters, just defines and holds server objects.
+`constructor()`
+- Method takes no parameters, just defines and holds server objects.
 
-- `onConnected(socket)`
-The `socket` parameter that the method takes is socket object which created after a successful handshake with any client. 
+`onConnected(socket)`
+- The `socket` parameter that the method takes is socket object which created after a successful handshake with any client. 
 Method starts with creating a `System/Connection` class object into `Server.connection` variable. Then in order to reach socket, player and other stuff that related to them defines that into same object with different keys for example: `Server.connection.socket`
 Finally pushes `Server.connection.player` object into `Server.players` object for being able to broadcast to other sockets.
