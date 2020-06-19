@@ -17,28 +17,30 @@ module.exports = class Server {
         this.connection.player = new Player();
         this.connection.server = server;
 
-        this.players[this.connection.player.data.id] = this.connection.player;
-        new Msg("Player " + this.connection.player.data.id + " joined to server.", "info");
+
+        socket.join(this.connection.player.room);
+        this.players[this.connection.player.id] = this.connection.player;
+        new Msg("Player " + this.connection.player.id + " joined to server.", "info");
         return this.connection;
     }
 
     spawnPlayers(map) {
         for (let playerID in this.players) {
             if (this.players[playerID].data.room === map) {
-                if (this.players[playerID] !== this.connection.player.data.id) {
-                    this.connection.socket.emit('spawn', this.players[playerID].data)
+                if (this.players[playerID] !== this.connection.player.id) {
+                    this.connection.socket.emit('spawn', this.players[playerID])
                 } else {
-                    this.connection.socket.emit('spawn', this.connection.player.data);
-                    this.connection.socket.broadcast.emit('spawn', this.connection.player.data);
+                    this.connection.socket.emit('spawn', this.connection.player);
+                    this.connection.socket.broadcast.emit('spawn', this.connection.player);
                 }
             }
         }
     }
 
     onDisconnected(connection = Connection) {
-        new Msg(Cfg.Config.ColorRed + "Player " + this.connection.player.data.id + " left from server." + Cfg.Config.ColorWhite, "error");
-        connection.socket.emit('playerLeft', this.connection.player.data);
-        delete this.players[this.connection.player.data.id];
+        new Msg(Cfg.Config.ColorRed + "Player " + this.connection.player.id + " left from server." + Cfg.Config.ColorWhite, "error");
+        connection.socket.emit('playerLeft', this.connection.player);
+        delete this.players[this.connection.player.id];
     }
 
     init() {

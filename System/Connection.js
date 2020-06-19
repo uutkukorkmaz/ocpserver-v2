@@ -14,7 +14,7 @@ module.exports = class Connection {
         let socket = connection.socket;
         let server = connection.server;
         let player = connection.player;
-        this.room = player.room;
+
 
         server.spawnPlayers(this.room);
 
