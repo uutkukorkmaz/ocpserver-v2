@@ -5,7 +5,7 @@ let server = new Server();
 
 const SocketIO = require('socket.io')(ServerConfig.Config.Port);
 server.init();
-new ConsoleMsg('Server started on port ' + ServerConfig.Config.Port);
+new ConsoleMsg("Server started on port " + ServerConfig.Config.Port);
 
 
 
