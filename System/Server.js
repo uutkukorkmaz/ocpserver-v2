@@ -1,7 +1,7 @@
 let Connection = require('./Connection');
 let Msg = require('./Msg');
 let Cfg = require('./Config');
-let Player = require('./Entyties/Player');
+let Player = require('./Entities/Player');
 
 module.exports = class Server {
 
