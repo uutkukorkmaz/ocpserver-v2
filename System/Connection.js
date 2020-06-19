@@ -2,6 +2,7 @@ module.exports = class Connection {
     socket;
     player;
     server;
+    room;
 
 
     constructor (){
@@ -13,9 +14,9 @@ module.exports = class Connection {
         let socket = connection.socket;
         let server = connection.server;
         let player = connection.player;
+        this.room = player.room;
 
-        socket.emit('spawn',player.data);
-        socket.broadcast.emit('spawn',player.data);
+        server.spawnPlayers(this.room);
 
         socket.on('disconnect', () => {
             server.onDisconnected(connection);

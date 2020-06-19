@@ -6,7 +6,7 @@ module.exports = class Player {
     constructor() {
         this.data = {
             id: IdGen.generate(),
-            map: "default",
+            room: "hub",
             position: {
                 x: 0,
                 y: 0,
