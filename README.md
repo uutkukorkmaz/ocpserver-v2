@@ -2,10 +2,10 @@
 This documentation tries to explain that how the hell is [gamename]'s server-side works and helps that how to develop it.
 ## Contents
 
-1. index.js
+1. [index.js](#indexjs)
 2. System/
-2.1. Config
-2.2. Server
+2.1. [Config](#configjs)
+2.2. [Server](serverjs)
 2.3. Connection
 2.4. Msg
 2.5. IDGenerator
