@@ -26,7 +26,7 @@ module.exports = class Server {
 
     spawnPlayers(map) {
         for (let playerID in this.players) {
-            if (this.players[playerID].data.room === map) {
+            if (this.players[playerID].room === map) {
                 if (this.players[playerID] !== this.connection.player.id) {
                     this.connection.socket.emit('spawn', this.players[playerID])
                 } else {
