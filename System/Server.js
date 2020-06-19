@@ -32,9 +32,7 @@ module.exports = class Server {
                     this.connection.socket.broadcast.emit('spawn', this.connection.player.data);
                 }
             }
-
         }
-
     }
 
     onDisconnected(connection = Connection) {
