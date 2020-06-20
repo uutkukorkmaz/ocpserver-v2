@@ -18,8 +18,10 @@ module.exports = class Server {
         this.connection.server = server;
 
 
+
         //socket.join(this.connection.player.room);
         this.players[this.connection.player.id] = this.connection.player;
+        console.log(this.players);
         new Msg("Player " + this.connection.player.id + " joined to server.", "info");
         return this.connection;
     }
