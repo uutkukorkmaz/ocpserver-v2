@@ -17,7 +17,7 @@ module.exports = class Connection {
 
 
         socket.emit('spawn', player);
-        console.log("[SERVER]: "player.id+" spawned ");
+        console.log("[SERVER]: "+player.id+" spawned ");
         socket.broadcast.emit('spawn', player);
         for(let playerID in server.players){
             if(server.players[playerID] != player.id)
