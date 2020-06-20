@@ -22,7 +22,7 @@ module.exports = class Server {
         //socket.join(this.connection.player.room);
         this.players[this.connection.player.id] = this.connection.player;
 
-        new Msg("Player " + this.connection.player.id + " joined to server.", "info");
+       // new Msg("Player " + this.connection.player.id + " joined to server.", "info");
         return this.connection;
     }
 
