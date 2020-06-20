@@ -18,6 +18,10 @@ module.exports = class Connection {
 
         socket.emit('spawn', player);
         socket.broadcast.emit('spawn', player);
+        for(let playerID in server.players){
+            if(server.players[playerID] != player.id)
+                socket.emit('spawn',server.players[playerID])
+        }
 
         socket.on('disconnect', () => {
             server.onDisconnected(connection);

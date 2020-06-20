@@ -21,7 +21,7 @@ module.exports = class Server {
 
         //socket.join(this.connection.player.room);
         this.players[this.connection.player.id] = this.connection.player;
-        console.log(this.players);
+
         new Msg("Player " + this.connection.player.id + " joined to server.", "info");
         return this.connection;
     }
@@ -44,7 +44,7 @@ module.exports = class Server {
         new Msg( "Player " + connection.player.id + " left from server.", "error");
         connection.socket.emit('playerLeft', connection.player);
         delete this.players[connection.player.id];
-        console.log(this.players);
+
     }
 
     init() {
