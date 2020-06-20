@@ -7,7 +7,7 @@ module.exports = class Player {
 
         this.id = IdGen.generate()
         this.position = {
-            x: Math.floor(Math.random() * 10),
+            x: 0,
             y: 0,
             z: 0
         }

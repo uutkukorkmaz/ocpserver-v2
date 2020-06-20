@@ -25,6 +25,12 @@ module.exports = class Connection {
                // console.log("[PLAYER " + player.id + "]: " + server.players[playerID].id + " spawned");
             }
         }
+        socket.on('updatePosition',(e) => {
+            player.position.x = e.vector.x;
+            player.position.y = e.vector.y;
+            player.position.z = e.vector.z;
+            socket.broadcast.emit('updatePosition',e);
+        });
 
         socket.on('disconnect', () => {
             server.onDisconnected(connection);

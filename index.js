@@ -13,7 +13,5 @@ SocketIO.on('connection', (socket) => {
     let connection = server.onConnected(socket);
     socket.emit('register',{id:connection.player.id});
     connection.createEvents();
-    socket.on('test',(e) => {
-        console.log(e);
-    })
+
 });
