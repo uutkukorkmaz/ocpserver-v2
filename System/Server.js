@@ -30,7 +30,7 @@ module.exports = class Server {
 
     onDisconnected(connection = Connection) {
         new Msg( "Player " + connection.player.id + " left from server.", "error");
-        connection.socket.emit('playerLeft', connection.player.id);
+        connection.socket.broadcast.emit('playerLeft', connection.player.id);
         delete this.players[connection.player.id];
 
     }
