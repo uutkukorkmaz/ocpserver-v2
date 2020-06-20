@@ -41,9 +41,10 @@ module.exports = class Server {
     }
 
     onDisconnected(connection = Connection) {
-        new Msg(Cfg.Config.ColorRed + "Player " + this.connection.player.id + " left from server." + Cfg.Config.ColorWhite, "error");
-        connection.socket.emit('playerLeft', this.connection.player);
-        delete this.players[this.connection.player.id];
+        new Msg( "Player " + connection.player.id + " left from server.", "error");
+        connection.socket.emit('playerLeft', connection.player);
+        delete this.players[connection.player.id];
+        console.log(this.players);
     }
 
     init() {
