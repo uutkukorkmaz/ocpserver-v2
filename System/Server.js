@@ -26,19 +26,7 @@ module.exports = class Server {
         return this.connection;
     }
 
-    spawnPlayers(map) {
-        for (let playerID in this.players) {
-            if (this.players[playerID].room === map) {
-                if (this.players[playerID] !== this.connection.player.id) {
 
-                    this.connection.socket.emit('spawn', this.players[playerID])
-                } else {
-                    this.connection.socket.emit('spawn', this.connection.player);
-                    this.connection.socket.broadcast.emit('spawn', this.connection.player);
-                }
-            }
-        }
-    }
 
     onDisconnected(connection = Connection) {
         new Msg( "Player " + connection.player.id + " left from server.", "error");
