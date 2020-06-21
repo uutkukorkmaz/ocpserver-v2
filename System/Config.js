@@ -1,3 +1,4 @@
+
 exports.Config = {
 
     ServerName : 'OCP Server',
@@ -13,5 +14,7 @@ exports.Config = {
     ColorMagenta: "\x1b[35m",
     ColorCyan: "\x1b[36m",
     ColorWhite: "\x1b[37m",
+
+    UniqueIdLength: 20,
 
 }

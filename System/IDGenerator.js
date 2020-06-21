@@ -1,5 +1,6 @@
+let Cfg = require('./Config');
 let ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_';
-let ID_LENGTH = 8;
+let ID_LENGTH = Cfg.Config.UniqueIdLength;
 let UNIQUE_RETRIES = 9999;
 
 module.exports = class IdGenerator {
