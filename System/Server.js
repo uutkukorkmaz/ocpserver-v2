@@ -45,10 +45,11 @@ module.exports = class Server {
             eventText += (typeof e.type == "undefined") ? "" : " | " + e.type
             console.log(Cfg.Config.ColorCyan + '[EVENT]: ' + Cfg.Config.ColorWhite + eventText);
         });
+        console.log();
         new Msg("Waiting for the MySQL response","processing");
         this.database = new Database();
 
-        new Msg("Server is ready to connect");
+
 
     }
 
