@@ -16,7 +16,7 @@ SocketIO.on('connection', (socket) => {
     socket.emit('register',{id:connection.player.id});
 
     socket.broadcast.emit('spawn', connection.player);
-    SocketIO.sockets[socket.id].emit('spawnOthers', connection.server.players);
+    SocketIO.to(socket.id).emit('spawnOthers', connection.server.players);
 
     console.log('spawnOthers');
     console.log(connection.server.players);
