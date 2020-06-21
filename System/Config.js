@@ -20,14 +20,14 @@ exports.Config = {
     ColorCyan: "\x1b[36m",
     ColorWhite: "\x1b[37m",
 
-    UniqueIdLength: 20,
+    UniqueIdLength: 6,
 
 }
 exports.events = [
     {eventName: "connection",function:"on  "},
     {eventName: "register",function:"emit"},
     {eventName: "spawn",function:"emit",type:"broadcast"},
-    {eventName: "spawnOthers",function:"emit",type:"broadcast.to"},
+    {eventName: "spawn",function:"emit"},
     {eventName: "positionUpdate",function:"on  "},
     {eventName: "positionUpdate",function:"emit"},
     {eventName: "playerLeft",function:"emit",type:"broadcast"},

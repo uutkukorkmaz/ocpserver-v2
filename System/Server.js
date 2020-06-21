@@ -6,7 +6,6 @@ let Database = require('./Database');
 
 
 module.exports = class Server {
-
     constructor() {
         this.players = [];
         this.connection = [];
@@ -23,11 +22,7 @@ module.exports = class Server {
         //socket.join(this.connection.player.room);
 
         this.players[this.connection.player.id] = this.connection.player;
-        socket.broadcast.emit('spawn', this.connection.player);
-        for(let PlayerID in this.players){
-            if(PlayerID != this.connection.player.id)
-                socket.emit('spawn',this.players[PlayerID]);
-        }
+
 
         new Msg("Player " + this.connection.player.id + " joined to server.", "info");
         // this.database.GetAllRecords("accounts",(err,res) => {
@@ -40,9 +35,10 @@ module.exports = class Server {
 
 
     onDisconnected(connection = Connection) {
-        new Msg("Player " + connection.player.id + " left from server.", "error");
-        connection.socket.broadcast.emit('playerLeft', connection.player.id);
+        new Msg(" Player "+connection.player.id+" left from server","error");
+        connection.socket.broadcast.emit('playerLeft',{id:connection.player.id});
         delete this.players[connection.player.id];
+
 
     }
 
