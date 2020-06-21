@@ -16,8 +16,6 @@ module.exports = class Connection {
         let player = connection.player;
 
 
-//        console.log(server.players[Object.keys(server.players)[0]]);
-
 
         socket.on('updatePosition',(e) => {
             player.position.x = e.vector.x;

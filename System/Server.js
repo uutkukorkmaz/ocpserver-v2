@@ -21,7 +21,13 @@ module.exports = class Server {
 
 
         //socket.join(this.connection.player.room);
+
         this.players[this.connection.player.id] = this.connection.player;
+        socket.broadcast.emit('spawn', this.connection.player);
+        for(let PlayerID in this.players){
+            if(PlayerID != this.connection.player.id)
+                socket.emit('spawn',this.players[PlayerID]);
+        }
 
         new Msg("Player " + this.connection.player.id + " joined to server.", "info");
         // this.database.GetAllRecords("accounts",(err,res) => {
