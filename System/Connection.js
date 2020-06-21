@@ -18,7 +18,7 @@ module.exports = class Connection {
 
 //        console.log(server.players[Object.keys(server.players)[0]]);
         socket.broadcast.emit('spawn', player);
-        IO.to(socket.id).emit('spawnOthers', this.players);
+        IO.sockets[socket.id].emit('spawnOthers', this.players);
         console.log('spawnOthers');
         console.log(server.players)
 
