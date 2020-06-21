@@ -9,7 +9,7 @@ module.exports = class Connection {
 
     }
 
-    createEvents() {
+    createEvents(IO) {
         let connection = this;
         let socket = connection.socket;
         let server = connection.server;
@@ -18,7 +18,7 @@ module.exports = class Connection {
 
 //        console.log(server.players[Object.keys(server.players)[0]]);
         socket.broadcast.emit('spawn', player);
-        socket.broadcast.to(connection.socket.id).emit('spawnOthers', server.players);
+        IO.to(socket.id).emit('spawnOthers', this.players);
         console.log('spawnOthers');
         console.log(server.players)
 
