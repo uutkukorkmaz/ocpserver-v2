@@ -8,8 +8,8 @@ module.exports = class IdGenerator {
 
     }
     static prepare() {
-        var rtn = '';
-        for (var i = 0; i < ID_LENGTH; i++) {
+        let rtn = '';
+        for (let i = 0; i < ID_LENGTH; i++) {
             rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
         }
         return rtn;
@@ -17,8 +17,8 @@ module.exports = class IdGenerator {
 
     static generate(previous) {
         previous = previous || [];
-        var retries = 0;
-        var id;
+        let retries = 0;
+        let id;
 
 
         while(!id && retries < UNIQUE_RETRIES) {
