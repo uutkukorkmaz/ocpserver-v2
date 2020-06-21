@@ -24,6 +24,10 @@ module.exports = class Server {
         this.players[this.connection.player.id] = this.connection.player;
 
         new Msg("Player " + this.connection.player.id + " joined to server.", "info");
+        // this.database.GetAllRecords("accounts",(err,res) => {
+        //    console.log(res);
+        // });
+
         return this.connection;
     }
 
@@ -47,7 +51,8 @@ module.exports = class Server {
         });
         console.log();
         new Msg("Waiting for the MySQL response","processing");
-        this.database = new Database();
+        //this.database = new Database();
+
 
 
 

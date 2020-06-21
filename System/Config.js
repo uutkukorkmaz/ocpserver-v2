@@ -8,7 +8,7 @@ exports.Config = {
       host: "localhost",
       user: "root",
       password: "",
-      name: "test"
+      name: "ocp"
     },
 
     ColorBlack: "\x1b[30m",
