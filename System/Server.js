@@ -28,6 +28,7 @@ module.exports = class Server {
         //    console.log(res);
         // });
 
+
         return this.connection;
     }
 
@@ -43,17 +44,20 @@ module.exports = class Server {
         new Msg("version " + Cfg.Config.ServerVersion, 'info');
         new Msg("Preparing the server", 'processing');
         console.log();
+
         new Msg("Getting events...", "processing");
+
         Cfg.events.forEach(e => {
             let eventText = e.function + " | " + e.eventName;
             eventText += (typeof e.type == "undefined") ? "" : " | " + e.type
             console.log(Cfg.Config.ColorCyan + '[EVENT]: ' + Cfg.Config.ColorWhite + eventText);
         });
+
         console.log();
-        new Msg("Waiting for the MySQL response","processing");
+
+        new Msg("Waiting for the MySQL response", "processing");
+
         //this.database = new Database();
-
-
 
 
     }
