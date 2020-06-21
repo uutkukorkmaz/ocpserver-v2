@@ -18,7 +18,7 @@ module.exports = class Connection {
 
 //        console.log(server.players[Object.keys(server.players)[0]]);
         socket.broadcast.emit('spawn', player);
-        socket.broadcast.to(connection.socket.id).emit('spawnOthers', server.players[Object.keys(server.players)[0]]);
+        socket.broadcast.to(connection.socket.id).emit('spawnOthers', server.players);
 
         socket.on('updatePosition',(e) => {
             player.position.x = e.vector.x;
