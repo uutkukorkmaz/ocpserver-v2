@@ -18,11 +18,8 @@ module.exports = class Connection {
 
 
         socket.broadcast.emit('spawn', player);
-        for(let playerID in server.players){
-            if(server.players[playerID].id != player.id) {
-                socket.emit('spawn', server.players[playerID]);
-            }
-        }
+        socket.broadcast.to(connection.socket.id).emit('spawnOthers',server.players);
+
         socket.on('updatePosition',(e) => {
             player.position.x = e.vector.x;
             player.position.y = e.vector.y;
