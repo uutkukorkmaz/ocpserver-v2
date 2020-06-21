@@ -1,10 +1,15 @@
-
 exports.Config = {
 
-    ServerName : 'OCP Server',
+    ServerName: 'OCP Server',
     ServerVersion: 'dev-1.0.012',
     Port: process.env.PORT || 52300,
 
+    db: {
+      host: "localhost",
+      user: "root",
+      password: "",
+      name: "test"
+    },
 
     ColorBlack: "\x1b[30m",
     ColorRed: "\x1b[31m",
@@ -18,3 +23,13 @@ exports.Config = {
     UniqueIdLength: 20,
 
 }
+exports.events = [
+    {eventName: "connection",function:"on  "},
+    {eventName: "register",function:"emit"},
+    {eventName: "spawn",function:"emit",type:"broadcast"},
+    {eventName: "spawnOthers",function:"emit",type:"broadcast.to"},
+    {eventName: "positionUpdate",function:"on  "},
+    {eventName: "positionUpdate",function:"emit"},
+    {eventName: "playerLeft",function:"emit",type:"broadcast"},
+    {eventName: "disconnect",function:"on  "},
+]

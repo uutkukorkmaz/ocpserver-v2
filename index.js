@@ -3,8 +3,10 @@ const ServerConfig = require('./System/Config');
 const ConsoleMsg = require('./System/Msg');
 let server = new Server();
 
-const SocketIO = require('socket.io')(ServerConfig.Config.Port);
+
 server.init();
+const SocketIO = require('socket.io')(ServerConfig.Config.Port);
+
 new ConsoleMsg("Server started on port " + ServerConfig.Config.Port);
 
 

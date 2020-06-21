@@ -7,8 +7,8 @@ module.exports = class Msg {
         else if (serverStatus == "processing")
             console.log(Cfg.Config.ColorYellow + '[' + Cfg.Config.ServerName + ']: ' + Cfg.Config.ColorWhite + msg)
         else if (serverStatus == "info")
-            console.log(Cfg.Config.ColorBlue + '[' + Cfg.Config.ServerName + ']: ' + Cfg.Config.ColorWhite + msg)
+            console.log(Cfg.Config.ColorCyan + '[' + Cfg.Config.ServerName + ']: ' + Cfg.Config.ColorWhite + msg)
         else
-            console.log(Cfg.Config.ColorRed + '[' + Cfg.Config.ServerName + ']: ' + Cfg.Config.ColorWhite + msg)
+            console.log(Cfg.Config.ColorMagenta + '[' + Cfg.Config.ServerName + ']: ' + Cfg.Config.ColorWhite + msg)
     }
 }
