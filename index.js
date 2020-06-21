@@ -14,6 +14,13 @@ new ConsoleMsg("Server started on port " + ServerConfig.Config.Port);
 SocketIO.on('connection', (socket) => {
     let connection = server.onConnected(socket);
     socket.emit('register',{id:connection.player.id});
-    connection.createEvents(SocketIO);
+
+    socket.broadcast.emit('spawn', connection.player);
+    SocketIO.sockets[socket.id].emit('spawnOthers', connection.server.players);
+
+    console.log('spawnOthers');
+    console.log(connection.server.players);
+
+    connection.createEvents();
 
 });

@@ -9,7 +9,7 @@ module.exports = class Connection {
 
     }
 
-    createEvents(IO) {
+    createEvents() {
         let connection = this;
         let socket = connection.socket;
         let server = connection.server;
@@ -17,10 +17,7 @@ module.exports = class Connection {
 
 
 //        console.log(server.players[Object.keys(server.players)[0]]);
-        socket.broadcast.emit('spawn', player);
-        IO.sockets[socket.id].emit('spawnOthers', this.players);
-        console.log('spawnOthers');
-        console.log(server.players)
+
 
         socket.on('updatePosition',(e) => {
             player.position.x = e.vector.x;
