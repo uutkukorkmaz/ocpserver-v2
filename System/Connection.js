@@ -18,6 +18,10 @@ module.exports = class Connection {
 
         this.Spawn();
 
+        socket.on('test',(data) => {
+            console.log(data);
+        })
+
         socket.on('positionUpdate',(data) => {
            //this.updatePosition(data);
 
