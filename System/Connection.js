@@ -18,8 +18,13 @@ module.exports = class Connection {
 
         this.Spawn();
 
-        socket.on('positionUpdate',(e) => {
-           this.updatePosition(e);
+        socket.on('positionUpdate',(data) => {
+           //this.updatePosition(data);
+
+            player.position = data.vector;
+            console.log(data);
+            server.players[player.id].position = player.position;
+            socket.broadcast.emit('positionUpdate',data);
         });
         socket.on('disconnect', () => {
            server.onDisconnected(connection);
