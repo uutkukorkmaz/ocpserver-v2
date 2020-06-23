@@ -44,12 +44,14 @@ module.exports = class Connection {
     updatePosition(data){
         let connection = this;
         let socket = connection.socket;
+        let server = connection.server;
         let player = connection.player;
 
-        player.position.x = data.vector.x;
-        player.position.y = data.vector.y;
-        player.position.z = data.vector.z;
+        player.position = data.vector;
+
+        server.players[player.id].position = player.position;
         socket.broadcast.emit('updatePosition',data);
+
     }
 
 }
