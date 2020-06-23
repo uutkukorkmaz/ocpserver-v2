@@ -48,7 +48,7 @@ module.exports = class Connection {
         let player = connection.player;
 
         player.position = data.vector;
-
+        console.log(data);
         server.players[player.id].position = player.position;
         socket.broadcast.emit('updatePosition',data);
 
