@@ -7,9 +7,9 @@ module.exports = class Player {
 
         this.id = "Player_"+IdGen.generate();
         this.position = {
-            x: Math.floor(Math.random() * 10),
+            x: 0,
             y: 0,
-            z: Math.floor(Math.random() * 10)
+            z: 0
         };
         this.room = "hub";
 
