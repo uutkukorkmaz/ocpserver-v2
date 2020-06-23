@@ -23,8 +23,8 @@ module.exports = class Server {
 
         this.players[this.connection.player.id] = this.connection.player;
 
+        new Msg(this.connection.player.id + " joined to server.", "info");
 
-        new Msg("Player " + this.connection.player.id + " joined to server.", "info");
         // this.database.GetAllRecords("accounts",(err,res) => {
         //    console.log(res);
         // });
@@ -35,12 +35,13 @@ module.exports = class Server {
 
 
     onDisconnected(connection = Connection) {
-        new Msg(" Player "+connection.player.id+" left from server","error");
+        new Msg(connection.player.id+" left from server","error");
         connection.socket.broadcast.emit('playerLeft',{id:connection.player.id});
         delete this.players[connection.player.id];
 
-
     }
+
+
 
     init() {
         new Msg("version " + Cfg.Config.ServerVersion, 'info');
