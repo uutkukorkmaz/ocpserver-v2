@@ -1,14 +1,17 @@
+const chalk = require('chalk');
 let Cfg = require('./Config');
 
 module.exports = class Msg {
-    constructor(msg, serverStatus = "success") {
-        if (serverStatus == "success")
-            console.log(Cfg.Config.ColorGreen + '[' + Cfg.Config.ServerName + ']: ' + Cfg.Config.ColorWhite + msg);
-        else if (serverStatus == "processing")
-            console.log(Cfg.Config.ColorYellow + '[' + Cfg.Config.ServerName + ']: ' + Cfg.Config.ColorWhite + msg)
-        else if (serverStatus == "info")
-            console.log(Cfg.Config.ColorCyan + '[' + Cfg.Config.ServerName + ']: ' + Cfg.Config.ColorWhite + msg)
-        else
-            console.log(Cfg.Config.ColorMagenta + '[' + Cfg.Config.ServerName + ']: ' + Cfg.Config.ColorWhite + msg)
+    constructor(msg, status = "success", fromServer = true, where = null) {
+        let s = {
+            "success": chalk.bold.green,
+            "processing": chalk.bold.yellow,
+            "info": chalk.bold.cyan,
+            "error": chalk.bold.magenta
+        }
+        let from = fromServer ? Cfg.Config.ServerName : where;
+        let print = `[${s[status](from)}]: ${chalk.white(msg)}`;
+        console.log(print);
     }
+
 }

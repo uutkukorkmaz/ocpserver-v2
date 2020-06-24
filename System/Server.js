@@ -1,5 +1,6 @@
 let Connection = require('./Connection');
 let Msg = require('./Msg');
+let chalk = require('chalk');
 let Cfg = require('./Config');
 let Player = require('./Entities/Player');
 let Database = require('./Database');
@@ -44,16 +45,17 @@ module.exports = class Server {
 
 
     init() {
-        new Msg("version " + Cfg.Config.ServerVersion, 'info');
+        new Msg("Current version " + Cfg.Config.ServerVersion, 'info');
         new Msg("Preparing the server", 'processing');
         console.log();
 
         new Msg("Getting events...", "processing");
 
         Cfg.events.forEach(e => {
-            let eventText = e.function + " | " + e.eventName;
-            eventText += (typeof e.type == "undefined") ? "" : " | " + e.type
-            console.log(Cfg.Config.ColorCyan + '[EVENT]: ' + Cfg.Config.ColorWhite + eventText);
+            let func = e.function == "on  "? chalk.green : chalk.magenta;
+            let eventText = func(e.function) + " | " + chalk.bold(e.eventName);
+            eventText += (typeof e.type == "undefined") ? "" : " -> " + e.type
+            new Msg(eventText,"info",false,"OCP EVENT");
         });
 
         console.log();
