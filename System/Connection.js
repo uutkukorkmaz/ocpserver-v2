@@ -30,6 +30,7 @@ module.exports = class Connection {
             player.position = data.vector;
             server.players[player.id].position = player.position;
             new Msg("positionUpdate server player object -> "+server.players[player.id],"info",false,"DEBUG");
+            new Msg("positionUpdate connection player object -> "+player,"info",false,"DEBUG");
             socket.broadcast.emit('positionUpdate',data);
             socket.broadcast.emit('positionUpdate',player);
         });
