@@ -26,12 +26,8 @@ module.exports = class Connection {
 
         socket.on('positionUpdate',(data) => {
            //this.updatePosition(data);
-            new Msg("positionUpdate incoming data -> " + JSON.stringify(data),"info",false,"DEBUG");
             player.position = data.vector;
             server.players[player.id].position = player.position;
-            new Msg("positionUpdate server player object -> "+server.players[player.id],"info",false,"DEBUG");
-            new Msg("positionUpdate connection player object -> "+player,"info",false,"DEBUG");
-            socket.broadcast.emit('positionUpdate',data);
             socket.broadcast.emit('positionUpdate',player);
         });
 
