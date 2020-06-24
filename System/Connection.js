@@ -24,10 +24,12 @@ module.exports = class Connection {
 
         socket.on('positionUpdate',(data) => {
            //this.updatePosition(data);
-            console.log("triggered");
+            console.log("positionUpdate",JSON.stringify(data));
             player.position = data.vector;
             server.players[player.id].position = player.position;
+            console.log("positionUpdate",server.players[player.id]);
             socket.broadcast.emit('positionUpdate',data);
+            socket.broadcast.emit('positionUpdate',player);
         });
 
         socket.on('disconnect', () => {
