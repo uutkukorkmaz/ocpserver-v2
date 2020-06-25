@@ -18,4 +18,5 @@ module.exports = class Authorization{
         let player = this.connection.player;
     }
 
+
 }
