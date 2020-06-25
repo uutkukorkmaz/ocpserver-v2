@@ -17,10 +17,12 @@ exports.Config = {
 exports.events = [
     {eventName: "connection",function:"on  "},
     {eventName: "register",function:"emit"},
-    {eventName: "spawn",function:"emit",type:"broadcast"},
-    {eventName: "spawn",function:"emit"},
-    {eventName: "positionUpdate",function:"on  "},
-    {eventName: "positionUpdate",function:"emit",type:"broadcast"},
+    {eventName: "needLogIn",function:"emit"},
+    {eventName: "login",function:"on  "},
+    {eventName: "spawn",function:"emit",type:"broadcast | neededEvent: login"},
+    {eventName: "spawn",function:"emit",type:"neededEvent: login"},
+    {eventName: "positionUpdate",function:"on  ",type:"neededEvent: login"},
+    {eventName: "positionUpdate",function:"emit",type:"broadcast | neededEvent: login"},
     {eventName: "playerLeft",function:"emit",type:"broadcast"},
     {eventName: "disconnect",function:"on  "},
 ]
