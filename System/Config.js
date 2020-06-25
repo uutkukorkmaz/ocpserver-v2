@@ -5,10 +5,10 @@ exports.Config = {
     Port: process.env.PORT || 52300,
 
     db: {
-      host: "localhost",
-      user: "root",
-      password: "",
-      name: "ocp"
+      host: "94.73.151.44",
+      user: "u9306996_615631",
+      password: "Tab8CxT5BUZgMwb",
+      name: "u9306996_api"
     },
 
     UniqueIdLength: 12,

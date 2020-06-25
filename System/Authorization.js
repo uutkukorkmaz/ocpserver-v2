@@ -15,6 +15,7 @@ module.exports = class Authorization{
 
     authorize(){
         let server = this.connection.server;
+        let player = this.connection.player;
     }
 
 }

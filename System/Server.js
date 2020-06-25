@@ -62,7 +62,7 @@ module.exports = class Server {
 
         new Msg("Waiting for the MySQL response", "processing");
 
-        //this.database = new Database();
+        this.database = new Database();
 
 
     }
