@@ -18,9 +18,10 @@ module.exports = class Database {
 
 
            this.con.connect((err) => {
-               if (err) throw err;
-               new Msg('Connected the MySQL database: ' + chalk.bold(Cfg.Config.db.name));
-               new Msg("Server is ready to connect");
+               if (err) {new Msg(err,"error",false,"MYSQL") }else {
+                   new Msg('Connected the MySQL database: ' + chalk.bold(Cfg.Config.db.name));
+                   new Msg("Server is ready to connect");
+               }
            });
        }catch (e) {
            new Msg(e,"error",false,"MYSQL");
