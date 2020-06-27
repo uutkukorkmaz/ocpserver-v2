@@ -1,7 +1,7 @@
 exports.Config = {
 
     ServerName: 'OCP Server',
-    ServerVersion: 'dev-1.0.014',
+    ServerVersion: 'dev-1.0.015',
     Port: process.env.PORT || 52300,
 
     db: {
@@ -17,7 +17,8 @@ exports.Config = {
 exports.events = [
     {eventName: "connection",function:"on  "},
     {eventName: "register",function:"emit"},
-    {eventName: "needLogIn",function:"emit"},
+   // {eventName: "needLogIn",function:"emit"},
+    {eventName: "wrongCredentials",function:"emit"},
     {eventName: "login",function:"on  "},
     {eventName: "spawn",function:"emit",type:"broadcast | neededEvent: login"},
     {eventName: "spawn",function:"emit",type:"neededEvent: login"},

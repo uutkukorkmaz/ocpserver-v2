@@ -1,6 +1,6 @@
 {
   "name": "ocpserver-v2",
-  "version": "1.0.014",
+  "version": "1.0.015",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "^4.1.0",
+    "ip": "^1.1.5",
     "mysql": "^2.18.1",
     "socket.io": "^2.3.0"
   },
