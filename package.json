@@ -4,10 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "start": "node index",
     "server": "node index",
     "update": "npm i",
     "update-start": "npm i && node index",
+=======
+    "start": "node index.js",
+    "server": "node index.js",
+>>>>>>> parent of 975a957... database integration & login event
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
