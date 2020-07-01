@@ -1,4 +1,5 @@
 const Msg = require('./Msg')
+const Database = require('./Database')
 
 module.exports = class Connection {
     socket;
@@ -17,12 +18,8 @@ module.exports = class Connection {
         let socket = connection.socket;
         let server = connection.server;
         let player = connection.player;
-        //auth deneme
-        //let a = new auth(connection,server);
-        //a.setUsername('a').setPassword('a').authorize();
 
-
-            let db = server.database.con;
+        if (this.loggedIn) {
             this.Spawn();
 
             socket.on('positionUpdate', (data) => {
@@ -32,12 +29,13 @@ module.exports = class Connection {
             socket.on('disconnect', () => {
                 server.onDisconnected(connection);
             });
-
-
-            //this.loggedIn = true;
-
-        socket.on('login', (data) => { console.log(data.username,data.password)});
-        //socket.emit('needLogIn');
+        } else {
+            socket.emit('needLogIn');
+            socket.on('login',(data)=>{
+                this.loggedIn = true;
+                new Msg(player.id+" logged in as "+data.username);
+            })
+        }
     }
 
     Spawn() {

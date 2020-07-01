@@ -1,4 +1,4 @@
-module.exports = class Vector3 {
+module.exports = class Vector2 {
     constructor(X = 0, Y = 0,Z=0) {
         this.x = X;
         this.y = Y;
@@ -10,12 +10,12 @@ module.exports = class Vector3 {
     }
 
     Normalized() {
-        let mag = this.Magnitude();
-        return new Vector3(this.x / mag, this.y / mag, this.z/mag);
+        var mag = this.Magnitude();
+        return new Vector2(this.x / mag, this.y / mag, this.z/mag);
     }
 
-    Distance(OtherVect = Vector3) {
-        let direction = new Vector3();
+    Distance(OtherVect = Vector2) {
+        var direction = new Vector2();
         direction.x = OtherVect.x - this.x;
         direction.y = OtherVect.y - this.y;
         direction.z = OtherVect.z - this.z;

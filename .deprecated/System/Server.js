@@ -1,4 +1,3 @@
-
 let Connection = require('./Connection');
 let Msg = require('./Msg');
 let chalk = require('chalk');
@@ -11,7 +10,6 @@ module.exports = class Server {
     constructor() {
         this.players = [];
         this.connection = [];
-        this.database = null;
     }
 
     onConnected(socket) {
@@ -27,6 +25,10 @@ module.exports = class Server {
         this.players[this.connection.player.id] = this.connection.player;
 
         new Msg(this.connection.player.id + " joined to server.", "info");
+
+        // this.database.GetAllRecords("accounts",(err,res) => {
+        //    console.log(res);
+        // });
 
 
         return this.connection;
