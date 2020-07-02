@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
         let auth = new Authentication(credentials, socket);
         let a = auth.auth().then((response) => {
             if (typeof response != "undefined") {
-                debug.log(response.account)
+                debug.log(JSON.stringify(response.account))
                 let b = new Connection(response,server)
 
             } else {
