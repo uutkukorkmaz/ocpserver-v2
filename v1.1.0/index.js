@@ -20,6 +20,7 @@ io.on('connection', (socket) => {
     socket.on('login', (credentials) => {
         debug.success('login credentials arrived','client-'+socket.id)
         let auth = new Authentication(credentials, socket);
+        debug.log(credentials)
         let a = auth.auth().then((account) => {
             if (typeof account != "undefined") {
                 debug.log(account)
