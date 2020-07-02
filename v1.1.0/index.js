@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
         let auth = new Authentication(credentials, socket);
         let a = auth.auth().then((account) => {
             if (typeof account != "undefined") {
-                //debug.log("account token: " + t.account.token)
+                debug.log("account token: " + t.account.token)
                 let b = new Connection(account,server)
 
             } else {

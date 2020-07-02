@@ -8,6 +8,6 @@ module.exports = class Connection {
         this.account = authentication.account
         this.token = authentication.account.token
         this.server = server
-        console.log(this)
+
     }
 }
