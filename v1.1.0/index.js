@@ -20,11 +20,10 @@ io.on('connection', (socket) => {
     socket.on('login', (credentials) => {
         debug.success('login credentials arrived','client-'+socket.id)
         let auth = new Authentication(credentials, socket);
-        debug.log(credentials.toString())
-        let a = auth.auth().then((account) => {
-            if (typeof account != "undefined") {
-                debug.log(account.toString())
-                let b = new Connection(account,server)
+        let a = auth.auth().then((response) => {
+            if (typeof response != "undefined") {
+                debug.log(response.account.token)
+                let b = new Connection(response,server)
 
             } else {
                 debug.error("wrong credentials")
