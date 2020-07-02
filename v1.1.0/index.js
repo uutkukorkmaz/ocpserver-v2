@@ -16,15 +16,13 @@ let server = new Server()
 debug.success('server started on port ' + chalk.bold(config.port))
 
 io.on('connection', (socket) => {
-    socket.emit('register', {id: "TEST"})
+    socket.emit('register', {id: socket.id})
     debug.log("connection detected. waiting for the account credentials from socket " + socket.id)
 
-    socket.on('ping',(data) => {
-        debug.log('test event has been reached to the server')
-        socket.emit('pong',{event:'test'});
-    })
+
 
     socket.on('login', (credentials) => {
+        debug.success('login credentials arrived','client-'+socket.id)
         let auth = new Authentication(credentials, socket);
         let a = auth.auth().then((account) => {
             if (typeof account != "undefined") {
