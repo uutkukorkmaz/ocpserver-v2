@@ -16,14 +16,13 @@ io.on('connection', (socket) => {
     debug.log("connection detected. waiting for the account credentials from socket " + socket.id)
 
 
-
     socket.on('login', (credentials) => {
-        debug.success('login credentials arrived','client-'+socket.id)
+        debug.success('login credentials arrived', 'client-' + socket.id)
         let auth = new Authentication(credentials, socket);
         let a = auth.auth().then((response) => {
             if (typeof response != "undefined") {
                 debug.log(JSON.stringify(response.account))
-                let b = new Connection(response,server)
+                let b = new Connection(response, server)
 
             } else {
                 debug.error("wrong credentials")
@@ -31,13 +30,13 @@ io.on('connection', (socket) => {
         }).catch((reason) => {
             debug.error("authentication credentials is rejected. there is no such a user")
             debug.error(reason.toString())
-        } )
+        })
     })
     /*socket.on('positionUpdate', (data) => {
 
         console.log(socket.id)
     })*/
-    socket.on('disconnect',()=>{
+    socket.on('disconnect', () => {
         debug.log("connection has been lost with " + socket.id)
     })
 })
