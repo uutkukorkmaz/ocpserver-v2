@@ -17,6 +17,11 @@ module.exports = {
             database: null
         },
     },
+    serverOptions: {
+        transports: ['websocket'],
+        upgrade: true,
+        forceNew: false
+    },
     uniqueIdLength: 12,
     debug:true,
 }

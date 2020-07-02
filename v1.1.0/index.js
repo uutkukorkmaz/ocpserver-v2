@@ -7,11 +7,7 @@ const Connection = require('./lib/classes/Connection')
 const Authentication = require('./lib/classes/Authentication')
 
 debug.processing('attempting to start server', "application")
-let io = new SocketIO(config.port, {
-    transports: ['websocket'],
-    upgrade: true,
-    forceNew: false
-})
+let io = new SocketIO(config.port, config.serverOptions)
 let server = new Server()
 debug.success('server started on port ' + chalk.bold(config.port))
 
