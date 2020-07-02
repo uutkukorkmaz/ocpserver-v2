@@ -29,7 +29,10 @@ io.on('connection', (socket) => {
             } else {
                 debug.error("wrong credentials")
             }
-        })
+        }).catch((reason) => {
+            debug.error("authentication credentials is rejected. there is no such a user")
+            debug.error(reason)
+        } )
     })
     /*socket.on('positionUpdate', (data) => {
 
