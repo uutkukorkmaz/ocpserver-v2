@@ -9,7 +9,8 @@ const Authentication = require('./lib/classes/Authentication')
 debug.processing('attempting to start server', "application")
 let io = new SocketIO(config.port, {
     transports: ['websocket'],
-    upgrade: false
+    upgrade: true,
+    forceNew: false
 })
 let server = new Server()
 debug.success('server started on port ' + chalk.bold(config.port))
