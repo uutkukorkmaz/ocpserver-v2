@@ -16,34 +16,10 @@ debug.success('server started on port ' + chalk.bold(config.port))
 io.on(event.on.Connect, (socket) => {
     socket.emit(event.emit.Register, {id: socket.id})
     debug.log("connection detected. waiting for the account credentials from socket " + socket.id)
+    let connection = new Connection(server, socket)
 
+    Connection.doIKnowYou();
 
-    socket.on(event.on.Login, (credentials) => {
-        debug.success('login credentials arrived', 'client-' + socket.id)
-        let auth = new Authentication(credentials, socket);
-        let a = auth.auth().then(async (response) => {
-            if (typeof response.account.token != "undefined") {
-                socket.emit(event.emit.LoginToken,{token:response.account.token})
-                const db = database()
-                try {
-                    let player = await db.query("SELECT * FROM players WHERE account=?", [response.account.id])
-                    player = player[0]
-                    socket.emit(event.emit.LoginPlayer,player)
-                    let b = new Connection(response, server)
-                } catch (err) {
-                    debug.error(err)
-                } finally {
-                    db.close()
-                }
-
-
-            } else {
-                socket.emit(event.emit.WrongCredentials)
-            }
-        }).catch((reason) => {
-            socket.emit(event.emit.NoSuchUser)
-        })
-    })
     /*socket.on('positionUpdate', (data) => {
 
         console.log(socket.id)
