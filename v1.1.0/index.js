@@ -17,26 +17,29 @@ debug.success('server started on port ' + chalk.bold(config.port))
 io.once('connection', (socket) => {
     socket.emit('register', {id: socket.id})
     debug.log("connection detected. waiting for the account credentials from socket " + socket.id)
-    let auth = new Authentication({username: "a", password: "a"}, socket);
-    let a = auth.auth().then((t) => {
-        if (typeof t != "undefined") {
-            //debug.log("account token: " + t.account.token)
-              let b = new Connection(t,server)
 
-        } else {
-            debug.error("wrong credentials")
-        }
+    socket.on('ping',(data) => {
+        debug.log('test event has been reached to the server')
+        socket.emit('pong',{event:'test'});
     })
 
     socket.on('login', (credentials) => {
+        let auth = new Authentication(credentials, socket);
+        let a = auth.auth().then((account) => {
+            if (typeof account != "undefined") {
+                //debug.log("account token: " + t.account.token)
+                let b = new Connection(account,server)
 
-
-    });
-    socket.on('positionUpdate', (data) => {
+            } else {
+                debug.error("wrong credentials")
+            }
+        })
+    })
+    /*socket.on('positionUpdate', (data) => {
 
         console.log(socket.id)
-    })
+    })*/
     socket.on('disconnect',()=>{
-        //socket.socket.reconnect()
+        debug.log("connection has been lost with " + socket.id)
     })
 })
