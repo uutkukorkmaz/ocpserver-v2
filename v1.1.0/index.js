@@ -15,7 +15,7 @@ let server = new Server()
 debug.success('server started on port ' + chalk.bold(config.port))
 
 io.once('connection', (socket) => {
-    socket.emit('register', {id: socket.id})
+    socket.emit('register', {id: "TEST"})
     debug.log("connection detected. waiting for the account credentials from socket " + socket.id)
 
     socket.on('ping',(data) => {
