@@ -20,10 +20,10 @@ io.on('connection', (socket) => {
     socket.on('login', (credentials) => {
         debug.success('login credentials arrived','client-'+socket.id)
         let auth = new Authentication(credentials, socket);
-        debug.log(credentials)
+        debug.log(credentials.toString())
         let a = auth.auth().then((account) => {
             if (typeof account != "undefined") {
-                debug.log(account)
+                debug.log(account.toString())
                 let b = new Connection(account,server)
 
             } else {
@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
             }
         }).catch((reason) => {
             debug.error("authentication credentials is rejected. there is no such a user")
-            debug.error(reason)
+            debug.error(reason.toString())
         } )
     })
     /*socket.on('positionUpdate', (data) => {
