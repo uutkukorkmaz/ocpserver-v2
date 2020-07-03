@@ -1,6 +1,7 @@
 const event = require('../events')
 const debug = require('../debug')
 const Player = require('../../entities/Player')
+const Authentication = require('./Authentication')
 
 module.exports = class Connection {
     socket
@@ -23,7 +24,7 @@ module.exports = class Connection {
     }
 
     listenEvents() {
-
+        console.log('dinliyorum')
     }
 
     doIKnowYou() {
