@@ -6,7 +6,7 @@ module.exports = class Connection {
     player;
     server;
     room;
-    loggedIn = false;
+   
 
 
     constructor() {
@@ -19,7 +19,7 @@ module.exports = class Connection {
         let server = connection.server;
         let player = connection.player;
 
-        if (this.loggedIn) {
+        
             this.Spawn();
 
             socket.on('positionUpdate', (data) => {
@@ -29,13 +29,7 @@ module.exports = class Connection {
             socket.on('disconnect', () => {
                 server.onDisconnected(connection);
             });
-        } else {
-            socket.emit('needLogIn');
-            socket.on('login',(data)=>{
-                this.loggedIn = true;
-                new Msg(player.id+" logged in as "+data.username);
-            })
-        }
+       
     }
 
     Spawn() {
