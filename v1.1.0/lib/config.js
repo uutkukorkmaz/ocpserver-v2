@@ -19,7 +19,7 @@ module.exports = {
     },
     serverOptions: {
         transports: ['websocket'],
-        upgrade: true,
+        upgrade: false,
         forceNew: false
     },
     uniqueIdLength: 12,
