@@ -33,12 +33,13 @@ module.exports = class Connection {
             let auth = new Authentication(credentials, socket);
             auth.auth().then((response) => {
                 if (typeof response.account.token != "undefined") {
+                    // TODO : Improve here
                     socket.emit(event.emit.LoginToken, {token: response.account.token})
                     this.authenticate(response)
                     let player = new Player(response.account)
                     this.player = player.getPlayer()
                     this.server.handshake(this)
-                    this.listenEvents()
+                    this.listenEvents() // TODO: HERE TOO...
                 } else {
                     socket.emit(event.emit.WrongCredentials)
                 }
