@@ -9,6 +9,7 @@ module.exports = {
         NoSuchUser: "noSuchUser",
         WrongCredentials: "wrongCredentials",
         LoginToken: "loginToken",
-        LoginPlayer: "loginPlayer"
+        LoginPlayer: "loginPlayer",
+        LoggedIn: "loggedIn"
     }
 }

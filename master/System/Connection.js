@@ -6,7 +6,7 @@ module.exports = class Connection {
     player;
     server;
     room;
-    loggedIn = false;
+
 
 
     constructor() {

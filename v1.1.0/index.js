@@ -5,6 +5,7 @@ const debug = require('./lib/debug')
 const database = require('./lib/classes/Database')
 const Server = require('./lib/classes/Server')
 const Connection = require('./lib/classes/Connection')
+const Player = require('./entities/Player')
 const event = require('./lib/events')
 const Authentication = require('./lib/classes/Authentication')
 
@@ -18,12 +19,9 @@ io.on(event.on.Connect, (socket) => {
     debug.log("connection detected. waiting for the account credentials from socket " + socket.id)
     let connection = new Connection(server, socket)
 
-    Connection.doIKnowYou();
+    connection.doIKnowYou();
 
-    /*socket.on('positionUpdate', (data) => {
 
-        console.log(socket.id)
-    })*/
     socket.on(event.on.Disconnect, () => {
         debug.log("connection has been lost with " + socket.id)
     })
