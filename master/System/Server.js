@@ -12,6 +12,7 @@ module.exports = class Server {
         this.connection = [];
     }
 
+
     onConnected(socket) {
         let server = this;
         this.connection = new Connection();
