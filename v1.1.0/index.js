@@ -16,7 +16,7 @@ io.on(event.on.Connect, (socket) => {
     socket.emit(event.emit.Register, {id: socket.id})
     debug.log("connection detected. waiting for the account credentials from socket " + socket.id)
     let connection = new Connection(server, socket)
-// TODO: move doIKnowYou method to the Server Class for checking account is logged in yet or not
+
     connection.doIKnowYou();
 
 
