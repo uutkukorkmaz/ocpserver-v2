@@ -21,7 +21,11 @@ module.exports = class Client {
 
         socket.on(event.on.Login, credentials => {
             this.loginEvent(credentials).then(r => {
-            })
+            });
+        });
+
+        socket.on(event.on.Disconnect, () => {
+            debug.log('user disconnected');
         });
 
 
@@ -32,9 +36,13 @@ module.exports = class Client {
         let socket = this.socket
         let accountSql = "SELECT * FROM accounts WHERE username=?"
         let playerSql = "SELECT * FROM players WHERE account=?"
-
+        let response = {}
         try {
-            socket.emit(event.emit.LoginProcess, {status: 0, msg: "Giriş işlemi yapılıyor..."})
+
+            response = {status: 0, msg: "Giriş işlemi yapılıyor..."}
+            debug.log(response)
+            socket.emit(event.emit.LoginProcess, response)
+
             await new Promise(sleep => setTimeout(sleep, 1000));
             let result = await db.query(accountSql, [credentials.username])
             if (result[0] !== undefined) {
@@ -46,18 +54,27 @@ module.exports = class Client {
                         this.account = result
                         this.server.accountLoggedIn(this.account.token)
                         this.definePlayerObject(getPlayer[0])
-                        socket.emit(event.emit.LoginProcess, {status: 1, msg: "Hesap doğrulandı, sunucuya bağlanıyor."})
+                        response = {status: 1, msg: "Hesap doğrulandı, sunucuya bağlanıyor."}
+                        debug.log(response)
+                        socket.emit(event.emit.LoginProcess, response)
                         socket.emit(event.emit.LoginToken, {token: result.token})
                         socket.emit(event.emit.LoginPlayer, this.player)
                     } else {
-                        socket.emit(event.emit.LoginProcess, {status: -1, msg: "Şifrenizi yanlış girdiniz."})
+                        response = {status: -1, msg: "Şifrenizi yanlış girdiniz."}
+                        debug.log(response)
+                        socket.emit(event.emit.LoginProcess, response)
                     }
                 } else {
-                    socket.emit(event.emit.LoginProcess, {status: -1, reason: "Hesap zaten bağlı."})
+                    response = {status: -1, reason: "Hesap zaten bağlı."}
+                    debug.log(response)
+                    socket.emit(event.emit.LoginProcess, response)
                 }
             } else {
-                socket.emit(event.emit.LoginProcess, {status: -1, reason: "Kullanıcı bulunamadı."})
+                response = {status: -1, reason: "Kullanıcı bulunamadı."}
+                debug.log(response)
+                socket.emit(event.emit.LoginProcess,)
             }
+
         } catch (e) {
             debug.error(e)
 
