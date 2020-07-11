@@ -18,15 +18,17 @@ module.exports = class Client {
 
     listenEvents() {
         let socket = this.socket
+        let server = this.server;
         debug.log('player connected waiting for login credentials ')
         socket.on(event.on.Login, credentials => {
             debug.log('login event');
-            this.loginEvent(credentials).then(r => {
-            });
+            this.loginEvent(credentials).then(r => {});
         });
 
         socket.on(event.on.Disconnect, () => {
-            debug.log('user disconnected');
+            server.accountLeft(this.account.token)
+            delete server.connections[this.id]
+            debug.log('player disconnected & logged out')
         });
 
 
