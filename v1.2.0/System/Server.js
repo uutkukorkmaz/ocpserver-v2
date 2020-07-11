@@ -46,6 +46,7 @@ module.exports = class Server {
         debug.processing("Preparing to initiate server on " + config.serverIP + ":" + config.port)
         debug.processing("Preparing to connect the database")
         this.database = new Database()
+        debug.processing("Preparing maps")
         this.maps = Maps
         this.printEvents()
     }
