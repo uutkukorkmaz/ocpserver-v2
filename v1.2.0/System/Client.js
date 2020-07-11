@@ -18,7 +18,7 @@ module.exports = class Client {
 
     listenEvents() {
         let socket = this.socket
-
+        debug.log('player connected waiting for login credentials ')
         socket.on(event.on.Login, credentials => {
             debug.log('login event');
             this.loginEvent(credentials).then(r => {
