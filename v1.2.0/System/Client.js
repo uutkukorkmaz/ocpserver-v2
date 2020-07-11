@@ -22,7 +22,6 @@ module.exports = class Client {
         socket.on(event.on.Login, credentials => {
             debug.log('login event');
             this.loginEvent(credentials).then(r => {
-                debug.log(r)
             });
         });
 
@@ -42,7 +41,7 @@ module.exports = class Client {
         try {
 
             response = {status: 0, msg: "Giriş işlemi yapılıyor..."}
-            debug.log(response.toString())
+            debug.log(response.msg)
             socket.emit(event.emit.LoginProcess, response)
 
             await new Promise(sleep => setTimeout(sleep, 1000));
@@ -57,23 +56,23 @@ module.exports = class Client {
                         this.server.accountLoggedIn(this.account.token)
                         this.definePlayerObject(getPlayer[0])
                         response = {status: 1, msg: "Hesap doğrulandı, sunucuya bağlanıyor."}
-                        debug.log(response.toString())
+                        debug.log(response.msg)
                         socket.emit(event.emit.LoginProcess, response)
                         socket.emit(event.emit.LoginToken, {token: result.token})
                         socket.emit(event.emit.LoginPlayer, this.player)
                     } else {
                         response = {status: -1, msg: "Şifrenizi yanlış girdiniz."}
-                        debug.log(response.toString())
+                        debug.log(response.msg)
                         socket.emit(event.emit.LoginProcess, response)
                     }
                 } else {
                     response = {status: -1, reason: "Hesap zaten bağlı."}
-                    debug.log(response.toString())
+                    debug.log(response.msg)
                     socket.emit(event.emit.LoginProcess, response)
                 }
             } else {
                 response = {status: -1, reason: "Kullanıcı bulunamadı."}
-                debug.log(response.toString())
+                debug.log(response.msg)
                 socket.emit(event.emit.LoginProcess,)
             }
 
