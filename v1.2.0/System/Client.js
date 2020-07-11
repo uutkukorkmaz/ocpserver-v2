@@ -20,7 +20,9 @@ module.exports = class Client {
         let socket = this.socket
 
         socket.on(event.on.Login, credentials => {
+            debug.log('login event');
             this.loginEvent(credentials).then(r => {
+                debug.log(r)
             });
         });
 
