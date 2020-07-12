@@ -7,7 +7,7 @@ let Player = require('./Entities/Player')
 let hash = require('./Hash')
 let idg = require('./IDG')
 module.exports = class Client {
-    id = idg.generate()
+    id = "CL-"+idg.generate()
     socket;
     server;
     account;
@@ -54,13 +54,13 @@ module.exports = class Client {
         let socket = this.socket
         let server = this.server
         debug.log('Spawning on "'+this.player.map+'"')
-        socket.to(this.player.map).broadcast.emit(event.emit.Spawn, this.player)
+        socket.to(this.player.map).broadcast.emit(event.emit.Spawn, this.preparePlayerData(this.player))
         for (let ObjectID in server.connections) {
             let currentPlayer = server.connections[ObjectID].player
             if (ObjectID !== this.id && currentPlayer.map === this.player.map) {
-                socket.to(this.player.map).emit(event.emit.Spawn, server.connections[ObjectID].player)
-                debug.log(ObjectID + " spawned")
-                console.log(currentPlayer)
+                socket.to(this.player.map).emit(event.emit.Spawn, this.preparePlayerData(currentPlayer))
+                debug.log(ObjectID + " spawned",'Client-'+this.id)
+
             }
         }
     }
@@ -141,6 +141,9 @@ module.exports = class Client {
     }
 
     preparePlayerData(player){
-
+        return {
+            id: player.objectID.toString(),
+            position: player.position
+        }
     }
 }
