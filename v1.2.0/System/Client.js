@@ -3,6 +3,7 @@ let event = require('../Helpers/events')
 let database = require('./QuickDatabase')
 let server = require('./Server')
 let Maps = require('./Entities/Maps')
+let Player = require('./Entities/Player')
 let hash = require('./Hash')
 let idg = require('./IDG')
 module.exports = class Client {
@@ -18,20 +19,44 @@ module.exports = class Client {
 
     listenEvents() {
         let socket = this.socket
-        let server = this.server;
-        debug.log('player connected waiting for login credentials ')
+        let server = this.server
+        debug.log('player connected waiting for login credentials from Client-' + this.id)
         socket.on(event.on.Login, credentials => {
-            debug.log('login event');
-            this.loginEvent(credentials).then(r => {});
+            debug.log('login event')
+            this.loginEvent(credentials).then(r => {
+
+            });
         });
+
+        socket.on(event.on.Ready, () => {
+            debug.log("I'm ready", "Client-" + this.id)
+            this.spawnEvent()
+        })
 
         socket.on(event.on.Disconnect, () => {
-            server.accountLeft(this.account.token)
-            delete server.connections[this.id]
-            debug.log('player disconnected & logged out')
+            if (this.account !== undefined) {
+                server.accountLeft(this.account.token)
+            }
+            if (server.connections.indexOf(this.id) > -1) {
+                delete server.connections[this.id]
+            }
+            debug.log('player disconnected & logged out ', 'Client-' + this.id)
         });
 
 
+    }
+
+    spawnEvent() {
+        let socket = this.socket
+        let server = this.server
+        debug.log('Spawning on "'+this.player.map+'"')
+        socket.broadcast.to(this.player.map).emit(event.emit.Spawn, this.player)
+        for (let ObjectID in server.connections) {
+            if (ObjectID !== this.id) {
+                socket.emit(event.emit.Spawn, server.connections[ObjectID].playerrs)
+                debug.log(ObjectID + " spawned")
+            }
+        }
     }
 
     async loginEvent(credentials) {
@@ -43,7 +68,7 @@ module.exports = class Client {
         try {
 
             response = {status: 0, msg: "Giriş işlemi yapılıyor..."}
-            debug.log(response.msg)
+            debug.log(response.msg, 'Client-' + this.id)
             socket.emit(event.emit.LoginProcess, response)
 
             await new Promise(sleep => setTimeout(sleep, 1000));
@@ -58,23 +83,26 @@ module.exports = class Client {
                         this.server.accountLoggedIn(this.account.token)
                         this.definePlayerObject(getPlayer[0])
                         response = {status: 1, msg: "Hesap doğrulandı, sunucuya bağlanıyor."}
-                        debug.log(response.msg)
+                        debug.log(response.msg, 'Client-' + this.id)
                         socket.emit(event.emit.LoginProcess, response)
                         socket.emit(event.emit.LoginToken, {token: result.token})
                         socket.emit(event.emit.LoginPlayer, this.player)
+                        await new Promise(sleep => setTimeout(sleep, 2000));
+
+
                     } else {
                         response = {status: -1, msg: "Şifrenizi yanlış girdiniz."}
-                        debug.log(response.msg)
+                        debug.log(response.msg, 'Client-' + this.id)
                         socket.emit(event.emit.LoginProcess, response)
                     }
                 } else {
                     response = {status: -1, reason: "Hesap zaten bağlı."}
-                    debug.log(response.msg)
+                    debug.log(response.msg, 'Client-' + this.id)
                     socket.emit(event.emit.LoginProcess, response)
                 }
             } else {
                 response = {status: -1, reason: "Kullanıcı bulunamadı."}
-                debug.log(response.msg)
+                debug.log(response.msg, 'Client-' + this.id)
                 socket.emit(event.emit.LoginProcess,)
             }
 
