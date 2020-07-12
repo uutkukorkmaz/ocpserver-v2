@@ -139,4 +139,8 @@ module.exports = class Client {
             z: object.posZ,
         }
     }
+
+    preparePlayerData(player){
+
+    }
 }
