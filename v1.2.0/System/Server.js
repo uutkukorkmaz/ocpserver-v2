@@ -74,12 +74,12 @@ module.exports = class Server {
     }
 
     accountLoggedIn(token) {
-        this.accounts.push(token)
+        this.accounts[token.token] = token
     }
 
     accountLeft(token) {
-        let index = this.accounts.indexOf(token)
-        this.checkAccount(token) ? this.accounts.splice(index, 1) : null
+        if (this.accounts[token] !== undefined)
+            delete this.accounts[token]
     }
 
     printEvents() {

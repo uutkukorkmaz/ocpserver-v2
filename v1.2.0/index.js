@@ -14,6 +14,7 @@ io.on(event.on.Connect,socket => {
     let client = server.onConnected(socket)
     debug.log("Register event for "+client.id)
     socket.emit(event.emit.Register,{id:client.id})
+    console.log({id:client.id})
     client.listenEvents()
 })
 

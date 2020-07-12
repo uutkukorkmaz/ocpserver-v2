@@ -23,18 +23,16 @@ module.exports = class Client {
         debug.log('player connected waiting for login credentials from Client-' + this.id)
         socket.on(event.on.Login, credentials => {
             debug.log('login event')
-            this.loginEvent(credentials).then(r => {
-
-            });
+            this.loginEvent(credentials).then(r => { });
         });
 
         socket.on(event.on.Ready, () => {
-            debug.log("I'm ready", "Client-" + this.id)
-
+            debug.log("I'm ready",  this.id)
+            this.spawnEvent()
         })
 
         socket.on(event.on.positionUpdate,data => {
-            console.log(data.toString());
+            console.log(data);
         })
 
         socket.on(event.on.Disconnect, () => {
@@ -44,6 +42,7 @@ module.exports = class Client {
             if (server.connections.indexOf(this.id) > -1) {
                 delete server.connections[this.id]
             }
+            console.log(server.accounts);
             debug.log('player disconnected & logged out ', 'Client-' + this.id)
         });
 
@@ -54,13 +53,14 @@ module.exports = class Client {
         let socket = this.socket
         let server = this.server
         debug.log('Spawning on "'+this.player.map+'"')
-        socket.to(this.player.map).broadcast.emit(event.emit.Spawn, this.preparePlayerData(this.player))
+        socket.to(this.player.map).emit(event.emit.Spawn, this.preparePlayerData(this.player))
+        console.log(this.preparePlayerData(this.player))
         for (let ObjectID in server.connections) {
             let currentPlayer = server.connections[ObjectID].player
             if (ObjectID !== this.id && currentPlayer.map === this.player.map) {
-                socket.to(this.player.map).emit(event.emit.Spawn, this.preparePlayerData(currentPlayer))
-                debug.log(ObjectID + " spawned",'Client-'+this.id)
-
+                socket.emit(event.emit.Spawn, this.preparePlayerData(currentPlayer))
+                debug.log(ObjectID + " spawned",this.id)
+                console.log(this.preparePlayerData(currentPlayer))
             }
         }
     }
@@ -75,7 +75,7 @@ module.exports = class Client {
         try {
 
             response = {status: 0, msg: "Giriş işlemi yapılıyor..."}
-            debug.log(response.msg, 'Client-' + this.id)
+            debug.log(response.msg, this.id)
             socket.emit(event.emit.LoginProcess, response)
 
             await new Promise(sleep => setTimeout(sleep, 1000));
@@ -87,19 +87,18 @@ module.exports = class Client {
                         let getPlayer = await db.query(playerSql, [result.id])
                         // TODO: improve this part to being able to serve multiple player for each account
                         this.account = result
-                        this.server.accountLoggedIn(this.account.token)
+                        this.server.accountLoggedIn(this.account)
                         this.definePlayerObject(getPlayer[0])
                         response = {status: 1, msg: "Hesap doğrulandı, sunucuya bağlanıyor."}
-                        debug.log(response.msg, 'Client-' + this.id)
+                        debug.log(response.msg,   this.id)
                         socket.emit(event.emit.LoginProcess, response)
                         socket.emit(event.emit.LoginToken, {token: result.token})
                         socket.emit(event.emit.LoginPlayer, this.player)
-                        await new Promise(sleep => setTimeout(sleep, 2000));
-                        this.spawnEvent()
+
 
                     } else {
                         response = {status: -1, msg: "Şifrenizi yanlış girdiniz."}
-                        debug.log(response.msg, 'Client-' + this.id)
+                        debug.log(response.msg,  this.id)
                         socket.emit(event.emit.LoginProcess, response)
                     }
                 } else {
