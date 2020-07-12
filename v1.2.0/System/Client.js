@@ -53,7 +53,7 @@ module.exports = class Client {
         socket.broadcast.to(this.player.map).emit(event.emit.Spawn, this.player)
         for (let ObjectID in server.connections) {
             if (ObjectID !== this.id) {
-                socket.emit(event.emit.Spawn, server.connections[ObjectID].playerrs)
+                socket.emit(event.emit.Spawn, server.connections[ObjectID].players)
                 debug.log(ObjectID + " spawned")
             }
         }
