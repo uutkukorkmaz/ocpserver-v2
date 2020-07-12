@@ -30,7 +30,11 @@ module.exports = class Client {
 
         socket.on(event.on.Ready, () => {
             debug.log("I'm ready", "Client-" + this.id)
-            this.spawnEvent()
+
+        })
+
+        socket.on(event.on.positionUpdate,data => {
+            console.log(data.toString());
         })
 
         socket.on(event.on.Disconnect, () => {
@@ -50,14 +54,17 @@ module.exports = class Client {
         let socket = this.socket
         let server = this.server
         debug.log('Spawning on "'+this.player.map+'"')
-        socket.broadcast.to(this.player.map).emit(event.emit.Spawn, this.player)
+        socket.to(this.player.map).broadcast.emit(event.emit.Spawn, this.player)
         for (let ObjectID in server.connections) {
-            if (ObjectID !== this.id) {
-                socket.emit(event.emit.Spawn, server.connections[ObjectID].players)
+            let currentPlayer = server.connections[ObjectID].player
+            if (ObjectID !== this.id && currentPlayer.map === this.player.map) {
+                socket.to(this.player.map).emit(event.emit.Spawn, server.connections[ObjectID].player)
                 debug.log(ObjectID + " spawned")
+                console.log(currentPlayer)
             }
         }
     }
+
 
     async loginEvent(credentials) {
         let db = database()
@@ -88,7 +95,7 @@ module.exports = class Client {
                         socket.emit(event.emit.LoginToken, {token: result.token})
                         socket.emit(event.emit.LoginPlayer, this.player)
                         await new Promise(sleep => setTimeout(sleep, 2000));
-
+                        this.spawnEvent()
 
                     } else {
                         response = {status: -1, msg: "Şifrenizi yanlış girdiniz."}
