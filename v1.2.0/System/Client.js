@@ -7,7 +7,7 @@ let Player = require('./Entities/Player')
 let hash = require('./Hash')
 let idg = require('./IDG')
 module.exports = class Client {
-    id = "CL-"+idg.generate()
+    id = "CL-" + idg.generate()
     socket;
     server;
     account;
@@ -20,19 +20,22 @@ module.exports = class Client {
     listenEvents() {
         let socket = this.socket
         let server = this.server
-        debug.log('player connected waiting for login credentials from Client-' + this.id)
+        debug.log('connected waiting for login credentials', this.id)
         socket.on(event.on.Login, credentials => {
-            debug.log('login event')
-            this.loginEvent(credentials).then(r => { });
+            debug.log('login event', this.id)
+            this.loginEvent(credentials).then(r => {
+            });
         });
 
         socket.on(event.on.Ready, () => {
-            debug.log("I'm ready",  this.id)
+            debug.log("I'm ready", this.id)
             this.spawnEvent()
         })
 
-        socket.on(event.on.positionUpdate,data => {
-            console.log(data);
+        socket.on(event.on.positionUpdate, data => {
+            this.player.position = data.vector;
+            this.server.connections[this.id].player = this.player;
+            socket.broadcast.emit(event.emit.positionUpdate, this.preparePlayerData(this.player))
         })
 
         socket.on(event.on.Disconnect, () => {
@@ -42,8 +45,7 @@ module.exports = class Client {
             if (server.connections.indexOf(this.id) > -1) {
                 delete server.connections[this.id]
             }
-            console.log(server.accounts);
-            debug.log('player disconnected & logged out ', 'Client-' + this.id)
+            debug.log('player disconnected & logged out ', this.id)
         });
 
 
@@ -52,15 +54,15 @@ module.exports = class Client {
     spawnEvent() {
         let socket = this.socket
         let server = this.server
-        debug.log('Spawning on "'+this.player.map+'"')
-        socket.to(this.player.map).emit(event.emit.Spawn, this.preparePlayerData(this.player))
-        console.log(this.preparePlayerData(this.player))
+        debug.log('Spawning on "' + this.player.map + '"',this.id)
+        socket.broadcast.emit(event.emit.Spawn, this.preparePlayerData(this.player))
+        debug.log("tell everyone to in my map, i'm spawned", this.id);
         for (let ObjectID in server.connections) {
             let currentPlayer = server.connections[ObjectID].player
-            if (ObjectID !== this.id && currentPlayer.map === this.player.map) {
+            if (ObjectID !== this.id && this.player.mapObject.sceneName === currentPlayer.mapObject.sceneName) {
+                debug.log(currentPlayer.account.username + " spawned", this.id)
                 socket.emit(event.emit.Spawn, this.preparePlayerData(currentPlayer))
-                debug.log(ObjectID + " spawned",this.id)
-                console.log(this.preparePlayerData(currentPlayer))
+
             }
         }
     }
@@ -90,7 +92,7 @@ module.exports = class Client {
                         this.server.accountLoggedIn(this.account)
                         this.definePlayerObject(getPlayer[0])
                         response = {status: 1, msg: "Hesap doğrulandı, sunucuya bağlanıyor."}
-                        debug.log(response.msg,   this.id)
+                        debug.log(response.msg, this.id)
                         socket.emit(event.emit.LoginProcess, response)
                         socket.emit(event.emit.LoginToken, {token: result.token})
                         socket.emit(event.emit.LoginPlayer, this.player)
@@ -98,16 +100,16 @@ module.exports = class Client {
 
                     } else {
                         response = {status: -1, msg: "Şifrenizi yanlış girdiniz."}
-                        debug.log(response.msg,  this.id)
+                        debug.log(response.msg, this.id)
                         socket.emit(event.emit.LoginProcess, response)
                     }
                 } else {
-                    response = {status: -1, reason: "Hesap zaten bağlı."}
+                    response = {status: -1, msg: "Hesap zaten bağlı."}
                     debug.log(response.msg, 'Client-' + this.id)
                     socket.emit(event.emit.LoginProcess, response)
                 }
             } else {
-                response = {status: -1, reason: "Kullanıcı bulunamadı."}
+                response = {status: -1, msg: "Kullanıcı bulunamadı."}
                 debug.log(response.msg, 'Client-' + this.id)
                 socket.emit(event.emit.LoginProcess,)
             }
@@ -139,7 +141,7 @@ module.exports = class Client {
         }
     }
 
-    preparePlayerData(player){
+    preparePlayerData(player) {
         return {
             id: player.objectID.toString(),
             position: player.position

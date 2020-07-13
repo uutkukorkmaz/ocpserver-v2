@@ -70,7 +70,7 @@ module.exports = class Server {
     }
 
     checkAccount(token) {
-        return this.accounts.indexOf(token) > -1
+        return this.accounts[token] !== undefined
     }
 
     accountLoggedIn(token) {
